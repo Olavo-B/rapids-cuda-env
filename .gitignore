@@ -1,0 +1,23 @@
+### 5. `.gitignore`
+To keep your Git repository clean, create this file in the root folder:
+
+```text
+# Ignore compiled binaries
+*.out
+*.exe
+*.o
+*.so
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore heavy datasets
+workspace/data/
+*.csv
+*.h5
+*.pt
+*.pth
