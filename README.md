@@ -15,13 +15,13 @@ A streamlined, GPU-accelerated Docker environment for Data Science, Machine Lear
 
 ## 🛠️ Project Structure
 
-\`\`\`text
+```text
 .
 ├── Dockerfile           # GPU environment definition
 ├── requirements.txt     # Python dependencies
 ├── start_env.sh         # One-click startup and token extraction script
 └── workspace/           # Persistent local directory for notebooks/data
-\`\`\`
+```
 
 ## 🚀 Quick Start (Recommended)
 
@@ -30,10 +30,10 @@ A streamlined, GPU-accelerated Docker environment for Data Science, Machine Lear
 
 Make the script executable and run it:
 
-\`\`\`bash
+```bash
 chmod +x start_env.sh
 ./start_env.sh
-\`\`\`
+```
 
 *The script will automatically print the exact `http://127.0.0.1:8888/...` URL for you to paste into your browser.*
 
@@ -42,16 +42,16 @@ chmod +x start_env.sh
 If you prefer to manage the container lifecycle manually instead of using the script:
 
 **1. Build the Image:**
-\`\`\`bash
+```bash
 docker build -t rapids-cuda-custom .
-\`\`\`
+```
 
 **2. Run the Container:**
-\`\`\`bash
+```bash
 docker run --name my-rapids-env --gpus all --cap-add=SYS_ADMIN --rm -it \
     -p 8888:8888 -v "${PWD}/workspace:/home/rapids/notebooks/workspace" \
     rapids-cuda-custom
-\`\`\`
+```
 
 > [!WARNING]
 > The `--cap-add=SYS_ADMIN` flag is strictly required if you intend to use NVIDIA Nsight Compute (`ncu`) to profile your custom CUDA kernels. 
