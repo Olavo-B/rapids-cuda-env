@@ -64,12 +64,19 @@ docker run --name "$CONTAINER_NAME" --gpus all --pull never -d \
     -v "$WORKSPACE_DIR:/home/rapids/notebooks/workspace" \
     "$IMAGE_NAME"
 
-echo "⏳ Waiting for JupyterLab to start..."
-sleep 4 # Give the container a few seconds to spin up the server
-
-echo "✅ Environment is running! Access your workspace using the link below:"
 echo "------------------------------------------------------------------"
-# Fetch and display the URLs containing the access token
-docker logs "$CONTAINER_NAME" 2>&1 | grep -E "http://127\.0\.0\.1:8888/\?token="
+echo "✅ Waiting for JupyterLab to start..."
+sleep 3  
+
+# This regex captures "http://127.0.0.1:8888" and any trailing paths or tokens
+JUPYTER_URL=$(docker logs "$CONTAINER_NAME" 2>&1 | grep -m 1 -oE "http://127\.0\.0\.1:8888[a-zA-Z0-9/=?&-]*")
+
+if [ -n "$JUPYTER_URL" ]; then
+    echo "Access your JupyterLab environment here:"
+    echo "$JUPYTER_URL"
+else
+    echo "Error: Could not find the Jupyter URL. Check the container logs manually:"
+    echo "docker logs $CONTAINER_NAME"
+fi
 echo "------------------------------------------------------------------"
 echo "To stop the environment later, run: docker stop $CONTAINER_NAME"
